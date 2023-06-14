@@ -40,14 +40,17 @@ if(update.hasMessage()&&update.getMessage().getText().equals("/start")){
     SendMessage message= createMessage("Привіт");
     message.setChatId(ChatId);
     attachButtons(message, Map.of(
-            "Слава Україні", "glory_for_ukraine",
-            "Слава Нації", "glory_for-nation"
+            "Слава Україні", "glory_for_ukraine"
     ));
     sendApiMethodAsync(message);
 }
-if (update.hasCallbackQuery()){
+        if (update.hasCallbackQuery()){
     if (update.getCallbackQuery().getData().equals("glory_for_ukraine")){
         SendMessage message=createMessage("Героям слава");
+        attachButtons(message, Map.of(
+
+                "Слава Нації", "glory_for-nation"
+        ));
         message.setChatId(ChatId);
         sendApiMethodAsync(message);
     } else if (update.getCallbackQuery().getData().equals("glory_for-nation")) {
@@ -57,13 +60,7 @@ if (update.hasCallbackQuery()){
 
     }
 }
-      //  SendMessage snd=createMessage("*Hello* "+ update.getMessage().getFrom().getFirstName() );
-        // attachButtons(snd, Map.of(
-        //      "Btn 1", "hello_btn1",
-        //        "Btn 2", "hello_btn2"
-        // ));
-        // snd.setChatId(ChatId);
-        // sendApiMethodAsync(snd);
+
     }
     public Long getChatId(Update update){
         if (update.hasMessage())
@@ -76,7 +73,7 @@ if (update.hasCallbackQuery()){
 
     public SendMessage createMessage(String text){
         SendMessage message =new SendMessage();
-        message.setText(new String (text.getBytes(), StandardCharsets.UTF_8));
+        message.setText(text);
         message.setParseMode("markdown");
         return message;
     }
@@ -86,7 +83,7 @@ if (update.hasCallbackQuery()){
         for (String buttonName:buttons.keySet()) {
             String buttonValue=buttons.get(buttonName);
             InlineKeyboardButton button = new InlineKeyboardButton();
-            button.setText(new String(buttonName.getBytes(), StandardCharsets.UTF_8));
+            button.setText(buttonName);
             button.setCallbackData(buttonValue);
             keyboard.add(Arrays.asList(button));
         }
