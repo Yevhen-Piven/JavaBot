@@ -59,10 +59,20 @@ if(update.hasMessage()&&update.getMessage().getText().equals("/start")){
             "Бонус: 5 монет.\n" +
             "Обери завдання, щоб перейти на наступний рівень");
     message.setChatId(chatId);
+
+    List<String> buttons = Arrays.asList(
+            "Сплести маскувальну сітку (+15 монет)",
+            " Зібрати кошти патріотичними піснями (+15 монет)",
+            "Вступити в Міністерство Мемів України (+15 монет)",
+            "Запустити волонтерську акцію (+15 монет)",
+            "Вступити до лав тероборони (+15 монет)"
+    );buttons=getRandom3(buttons);
+
+
     attachButtons(message,Map.of(
-            "Сплести маскувальну сітку (+15 монет)","level-1_task",
-            "Зібрати кошти патріотичними піснями (+15 монет)","level-1_task",
-            "Вступити в Міністерство Мемів України (+15 монет)","level-1_task"
+            buttons.get(0),"level-1_task",
+            buttons.get(1),"level-1_task",
+            buttons.get(2),"level-1_task"
     ));
     sendApiMethodAsync(message);}
     //SendMessage message= createMessage("Привіт");
@@ -80,12 +90,21 @@ if(update.hasMessage()&&update.getMessage().getText().equals("/start")){
                  "Баланс: 20 монет. \n" +
                  "Обери завдання, щоб перейти на наступний рівень\n");
          message.setChatId(chatId);
+
+         List<String> buttons = Arrays.asList(
+                 "Зібрати комарів для нової біологічної зброї (+15 монет)",
+                 "Пройти курс молодого бійця (+15 монет)",
+                 "Задонатити на ЗСУ (+15 монет)",
+                 "Збити дрона банкою огірків (+15 монет)",
+                 "Зробити запаси коктейлів Молотова (+15 монет)"
+         );
+         buttons=getRandom3(buttons);
+
          attachButtons(message,Map.of(
-                 "Зібрати комарів для нової біологічної зброї (+15 монет)","level-2_task",
-                 "Пройти курс молодого бійця (+15 монет) ","level-2_task",
-                 "Задонатити на ЗСУ (+15 монет) ","level-2_task",
-                 "Збити дрона банкою огірків (+15 монет) ","level-2_task",
-                 "Зробити запаси коктейлів Молотова (+15 монет) ","level-2_task"
+                 buttons.get(0),"level-2_task",
+                 buttons.get(1),"level-2_task",
+                 buttons.get(2),"level-2_task"
+
          ));
          sendApiMethodAsync(message);
          }}
@@ -99,13 +118,46 @@ if(update.hasMessage()&&update.getMessage().getText().equals("/start")){
                         "Баланс: 35 монет. \n" +
                         "Обери завдання, щоб перейти на наступний рівень");
                 message.setChatId(chatId);
+                List<String> buttons = Arrays.asList(
+                        "Злітати на тестовий рейд по чотирьох позиціях (+15 монет) ",
+                        "Відвезти гуманітарку на передок (+15 монет) ",
+                        "Знайти зрадника та здати в СБУ (+15 монет)",
+                        "Навести арту на орків (+15 монет)",
+                        "Притягнути танк трактором (+15 монет)"
+                );buttons=getRandom3(buttons);
+
+
                 attachButtons(message,Map.of(
-                        "Злітати на тестовий рейд по чотирьох позиціях (+15 монет) ","level-3_task",
-                        "Відвезти гуманітарку на передок (+15 монет) ","level-3_task",
-                        "Знайти зрадника та здати в СБУ (+15 монет) ","level-3_task",
-                        "Навести арту на орків (+15 монет)","level-3_task",
-                        "Притягнути танк трактором (+15 монет)","level-3_task"
+                        buttons.get(0),"level-3_task",
+                        buttons.get(1),"level-3_task",
+                        buttons.get(2),"level-3_task"
                 ));
+                sendApiMethodAsync(message);
+            }}
+
+        if (update.hasCallbackQuery()){
+            if (update.getCallbackQuery().getData().equals("level-3_task")&&getLevel(chatId)==3) {
+                setLevel(chatId,4);
+                sendImage("level-4",chatId);
+                SendMessage message=createMessage("*Вітаємо на останньому рівні! Твій гусак - готова біологічна зброя - бандерогусак.*\n" +
+                        "Баланс: 50 монет. \n" +
+                        "Тепер ти можеш придбати Джавелін і глушити чмонь");
+                message.setChatId(chatId);
+                               attachButtons(message,Map.of(
+                        "Купити Джавелін (50 монет)","level-4_task"
+
+                ));
+                sendApiMethodAsync(message);
+            }}
+
+
+        if (update.hasCallbackQuery()){
+            if (update.getCallbackQuery().getData().equals("level-4_task")&&getLevel(chatId)==4) {
+                setLevel(chatId,5);
+                sendImage("final",chatId);
+                SendMessage message=createMessage("*Джавелін твій. Повний вперед!*");
+                message.setChatId(chatId);
+
                 sendApiMethodAsync(message);
             }}
          // } else if (update.getCallbackQuery().getData().equals("glory_for-nation")) {
@@ -159,5 +211,11 @@ return levels.getOrDefault(chatId, 1);
 }
 public void setLevel(Long chatId, int level){
     levels.put(chatId,level);
+}
+
+public List<String> getRandom3(List<String>variants){
+ArrayList<String> copy=new ArrayList<>(variants);
+Collections.shuffle(copy);
+    return copy.subList(0, 3);
 }
 }
