@@ -64,7 +64,7 @@ if(update.hasMessage()&&update.getMessage().getText().equals("/start")){
             "Зібрати кошти патріотичними піснями (+15 монет)","level-1_task",
             "Вступити в Міністерство Мемів України (+15 монет)","level-1_task"
     ));
-    sendApiMethodAsync(message);
+    sendApiMethodAsync(message);}
     //SendMessage message= createMessage("Привіт");
     // message.setChatId(chatId);
     //attachButtons(message, Map.of(
@@ -72,22 +72,49 @@ if(update.hasMessage()&&update.getMessage().getText().equals("/start")){
     //));
     // sendApiMethodAsync(message);
 //}
-    // if (update.hasCallbackQuery()){
-    // if (update.getCallbackQuery().getData().equals("glory_for_ukraine")){
-    //   SendMessage message=createMessage("Героям слава");
-    // attachButtons(message, Map.of(
+     if (update.hasCallbackQuery()){
+     if (update.getCallbackQuery().getData().equals("level-1_task")&&getLevel(chatId)==1) {
+         setLevel(chatId,2);
+         sendImage("level-2",chatId);
+         SendMessage message=createMessage("*Вітаємо на другому рівні! Твій гусак - біогусак.*\n" +
+                 "Баланс: 20 монет. \n" +
+                 "Обери завдання, щоб перейти на наступний рівень\n");
+         message.setChatId(chatId);
+         attachButtons(message,Map.of(
+                 "Зібрати комарів для нової біологічної зброї (+15 монет)","level-2_task",
+                 "Пройти курс молодого бійця (+15 монет) ","level-2_task",
+                 "Задонатити на ЗСУ (+15 монет) ","level-2_task",
+                 "Збити дрона банкою огірків (+15 монет) ","level-2_task",
+                 "Зробити запаси коктейлів Молотова (+15 монет) ","level-2_task"
+         ));
+         sendApiMethodAsync(message);
+         }}
 
-    //        "Слава Нації", "glory_for-nation"
-    //  ));
-    //  message.setChatId(chatId);
-    //   sendApiMethodAsync(message);
-    // } else if (update.getCallbackQuery().getData().equals("glory_for-nation")) {
-    // SendMessage message=createMessage("Смерть ворогам");
-    //  message.setChatId(chatId);
-    // sendApiMethodAsync(message);
 
-    //}
-}
+        if (update.hasCallbackQuery()){
+            if (update.getCallbackQuery().getData().equals("level-2_task")&&getLevel(chatId)==2) {
+                setLevel(chatId,3);
+                sendImage("level-3",chatId);
+                SendMessage message=createMessage("*Вітаємо на третьому рівні! Твій гусак - бандеростажер.*\n" +
+                        "Баланс: 35 монет. \n" +
+                        "Обери завдання, щоб перейти на наступний рівень");
+                message.setChatId(chatId);
+                attachButtons(message,Map.of(
+                        "Злітати на тестовий рейд по чотирьох позиціях (+15 монет) ","level-3_task",
+                        "Відвезти гуманітарку на передок (+15 монет) ","level-3_task",
+                        "Знайти зрадника та здати в СБУ (+15 монет) ","level-3_task",
+                        "Навести арту на орків (+15 монет)","level-3_task",
+                        "Притягнути танк трактором (+15 монет)","level-3_task"
+                ));
+                sendApiMethodAsync(message);
+            }}
+         // } else if (update.getCallbackQuery().getData().equals("glory_for-nation")) {
+         // SendMessage message=createMessage("Смерть ворогам");
+         //  message.setChatId(chatId);
+         // sendApiMethodAsync(message);
+
+         //}
+
 
     }
     public Long getChatId(Update update){
