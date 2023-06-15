@@ -110,7 +110,7 @@ if(update.hasMessage()&&update.getMessage().getText().equals("/start")){
          }}
 
 
-        if (update.hasCallbackQuery()){
+
             if (update.getCallbackQuery().getData().equals("level-2_task")&&getLevel(chatId)==2) {
                 setLevel(chatId,3);
                 sendImage("level-3",chatId);
@@ -133,9 +133,9 @@ if(update.hasMessage()&&update.getMessage().getText().equals("/start")){
                         buttons.get(2),"level-3_task"
                 ));
                 sendApiMethodAsync(message);
-            }}
+            }
 
-        if (update.hasCallbackQuery()){
+
             if (update.getCallbackQuery().getData().equals("level-3_task")&&getLevel(chatId)==3) {
                 setLevel(chatId,4);
                 sendImage("level-4",chatId);
@@ -148,10 +148,10 @@ if(update.hasMessage()&&update.getMessage().getText().equals("/start")){
 
                 ));
                 sendApiMethodAsync(message);
-            }}
+            }
 
 
-        if (update.hasCallbackQuery()){
+
             if (update.getCallbackQuery().getData().equals("level-4_task")&&getLevel(chatId)==4) {
                 setLevel(chatId,5);
                 sendImage("final",chatId);
@@ -159,7 +159,7 @@ if(update.hasMessage()&&update.getMessage().getText().equals("/start")){
                 message.setChatId(chatId);
 
                 sendApiMethodAsync(message);
-            }}
+            }
          // } else if (update.getCallbackQuery().getData().equals("glory_for-nation")) {
          // SendMessage message=createMessage("Смерть ворогам");
          //  message.setChatId(chatId);
